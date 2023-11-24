@@ -243,13 +243,13 @@ const handleClickSample = (mode: string) => {
   } else if (mode == "alpha") {
     regexText.value = "[a-z]+"
   } else if (mode == "chinese") {
-    regexText.value = `[\u4e00-\u9fff]`
+    regexText.value = `[\\u4e00-\\u9fff]+`
   } else if (mode == "extractPhoneNumber") {
     regexText.value = "1[0-9]{10}"
   } else if (mode == "phoneNumber") {
     regexText.value = "^1[0-9]{10}$"
   } else if (mode == "IdCard") {
-    regexText.value = "^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$"
+    regexText.value = `^([1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx])$`
   }
 }
 
@@ -511,8 +511,7 @@ type SupportField = ITextField | IDateTimeField | INumberField;
     <el-row class="tag-row">
       <el-tag class="ml-2 clickable" type="" @click="handleClickSample(`number`)">{{ t("sample.number") }}</el-tag>
       <el-tag class="ml-2 clickable" type="info" @click="handleClickSample(`alpha`)">{{ t("sample.aplpha") }}</el-tag>
-      <!-- 界面会自动转义，待修复 -->
-      <!-- <el-tag class="ml-2 clickable" type="warning" @click="handleClickSample(`chinese`)">{{ t("sample.chinese") }}</el-tag> -->
+      <el-tag class="ml-2 clickable" type="warning" @click="handleClickSample(`chinese`)">{{ t("sample.chinese") }}</el-tag>
       <el-tag class="ml-2 clickable" type="success" @click="handleClickSample(`phoneNumber`)">{{ t("sample.phoneNumber") }}</el-tag>
       <el-tag class="ml-2 clickable" type="success" @click="handleClickSample(`extractPhoneNumber`)">{{ t("sample.extractPhoneNumber") }}</el-tag>
       <el-tag class="ml-2 clickable" type="danger" @click="handleClickSample(`IdCard`)">{{ t("sample.IdCard") }}</el-tag>
