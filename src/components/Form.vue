@@ -33,7 +33,7 @@ const fieldList = shallowRef<IFieldMeta[]>([]);
 const activeTableName = ref("");
 const activeTableId = ref("");
 const errorMsg = ref("");
-const replaceText = ref("")
+const replaceText = ref("");
 const originField = shallowRef<IFieldMeta>();
 const targetField = shallowRef<IFieldMeta>();
 
@@ -45,7 +45,7 @@ const activeUnit = ref({
   label: "",
   value: "",
 });
-const activeModifier = ref([]);
+const activeModifier = ref<any[]>([]);
 const transformPatternList = computed(() => {
   return [
     {
@@ -84,6 +84,32 @@ const modifierList = computed(() => {
       label: t("modifier.newline"),
       value: "s",
     },
+  ];
+});
+activeModifier.value[0] = modifierList.value[0]["value"]
+
+const sampleList = computed(() => {
+  return [
+    {
+      label: t("sample.extractPhoneNumber"),
+      value: "extractPhoneNumber",
+      regex: "",
+    },
+    {
+      label: t("sample.IdCard"),
+      value: "IdCard",
+      regex: "",
+    },
+    {
+      label: t("sample.PostalCode"),
+      value: "PostalCode",
+      regex: "",
+    },
+    // {
+    //   label: t("sample.IPAddress"),
+    //   value: "IPAddress",
+    //   regex: ""
+    // },
   ];
 });
 
@@ -215,7 +241,7 @@ const handleConfirm = async () => {
         }
         recordCount.value++;
         if (!stopFlag.value) {
-          const rplcTxt = replaceText.value
+          const rplcTxt = replaceText.value;
           let targetVal = regexTranform(val, regexText.value, rplcTxt);
           if (targetVal != undefined) {
             const proimse = setValueByRecordId(
@@ -238,20 +264,24 @@ const handleConfirm = async () => {
 };
 
 const handleClickSample = (mode: string) => {
-  if (mode ==  "number") {
-    regexText.value = "[0-9]+"
+  if (mode == "number") {
+    regexText.value = "[0-9]+";
   } else if (mode == "alpha") {
-    regexText.value = "[a-z]+"
-  } else if (mode == "chinese") {
-    regexText.value = `[\\u4e00-\\u9fff]+`
-  } else if (mode == "extractPhoneNumber") {
-    regexText.value = "1[0-9]{10}"
+    regexText.value = "[a-z]+";
   } else if (mode == "phoneNumber") {
-    regexText.value = "^1[0-9]{10}$"
+    regexText.value = "^1[0-9]{10}$";
+  } else if (mode == "chinese") {
+    regexText.value = `[\\u4e00-\\u9fff]+`;
+  } else if (mode == "extractPhoneNumber") {
+    regexText.value = "1[0-9]{10}";
   } else if (mode == "IdCard") {
-    regexText.value = `^([1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx])$`
+    regexText.value = `^[1-9]\\d{5}(18|19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$`;
+  } else if (mode == "PostalCode") {
+    regexText.value = `^[1-9]\\d{5}$`;
+  } else if (mode == "IPAddress") {
+    regexText.value = `^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$`;
   }
-}
+};
 
 /**
  *
@@ -374,7 +404,12 @@ type SupportField = ITextField | IDateTimeField | INumberField;
         "
       >
         {{ t("form.currentTable") }}
-        <el-tag type="success" size="medium" style="margin-left: 10px">
+        <el-tag
+          type="success"
+          effect="dark"
+          size="medium"
+          style="margin-left: 10px"
+        >
           {{ activeTableName }}
         </el-tag>
       </el-row>
@@ -492,30 +527,63 @@ type SupportField = ITextField | IDateTimeField | INumberField;
               <span> / </span>
             </template>
             <template #append>
-              <span> / {{ modifierText }} </span>
+              <span> /{{ modifierText }} </span>
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item v-if="activeTransformPattern.value == `replace`" :label="t(`form.inputReplaceText`)">
+        <el-form-item
+          v-if="activeTransformPattern.value == `replace`"
+          :label="t(`form.inputReplaceText`)"
+        >
           <el-input
             v-model="replaceText"
             :placeholder="t(`form.inputReplaceText`)"
             clearable
             style="width: 100%"
           >
-          
           </el-input>
         </el-form-item>
       </div>
     </el-form>
-    <el-row class="tag-row">
-      <el-tag class="ml-2 clickable" type="" @click="handleClickSample(`number`)">{{ t("sample.number") }}</el-tag>
-      <el-tag class="ml-2 clickable" type="info" @click="handleClickSample(`alpha`)">{{ t("sample.aplpha") }}</el-tag>
-      <el-tag class="ml-2 clickable" type="warning" @click="handleClickSample(`chinese`)">{{ t("sample.chinese") }}</el-tag>
-      <el-tag class="ml-2 clickable" type="success" @click="handleClickSample(`phoneNumber`)">{{ t("sample.phoneNumber") }}</el-tag>
-      <el-tag class="ml-2 clickable" type="success" @click="handleClickSample(`extractPhoneNumber`)">{{ t("sample.extractPhoneNumber") }}</el-tag>
-      <el-tag class="ml-2 clickable" type="danger" @click="handleClickSample(`IdCard`)">{{ t("sample.IdCard") }}</el-tag>
-    </el-row>
+    <div class="tag-row">
+      <el-tag
+        class="ml-2 clickable tag"
+        type=""
+        @click="handleClickSample(`number`)"
+        >{{ t("sample.number") }}</el-tag
+      >
+      <el-tag
+        class="ml-2 clickable tag"
+        type="warning"
+        @click="handleClickSample(`alpha`)"
+        >{{ t("sample.aplpha") }}</el-tag
+      >
+      <el-tag
+        class="ml-2 clickable tag"
+        type="success"
+        @click="handleClickSample(`phoneNumber`)"
+        >{{ t("sample.phoneNumber") }}</el-tag
+      >
+      <el-popover :width="150" :hide-after="0" trigger="click">
+        <template #reference>
+          <el-tag class="ml-2 clickable tag" effect="plain" type="info">{{
+            t("status.more")
+          }}</el-tag>
+        </template>
+        <el-row
+          v-for="item in sampleList"
+          style="justify-content: center; padding-bottom: 5px"
+        >
+          <el-tag
+            class="ml-2 clickable tag"
+            type=""
+            effect="plain"
+            @click="handleClickSample(item.value)"
+            >{{ item.label }}</el-tag
+          >
+        </el-row>
+      </el-popover>
+    </div>
     <el-col :span="24"> </el-col>
     <div>
       <el-button type="primary" :disabled="isLoading" @click="handleConfirm">
@@ -612,11 +680,15 @@ type SupportField = ITextField | IDateTimeField | INumberField;
 .clickable :hover {
   cursor: pointer;
 }
+.tag {
+  margin-right: 5px;
+}
 .tag-row {
-  width: 100%; 
-  padding-bottom: 15px; 
-  justify-content: space-evenly;  
-  display: flex;flex-wrap: wrap; 
+  width: 100%;
+  padding-bottom: 15px;
+  justify-content: left;
+  display: flex;
+  flex-wrap: wrap;
   row-gap: 5px;
 }
 </style>

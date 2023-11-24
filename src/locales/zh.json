@@ -40,9 +40,12 @@
     "chinese": "中文",
     "phoneNumber": "电话号码",
     "extractPhoneNumber": "提取电话号码",
-    "IdCard": "身份证"
+    "IdCard": "身份证(18位)",
+    "PostalCode": "邮政编码(6位)",
+    "IPAddress": "IP地址"
   },
   "status": {
+    "more": "更多",
     "transforming": "转换中",
     "confirm": "开始转换",
     "stop": "停止",

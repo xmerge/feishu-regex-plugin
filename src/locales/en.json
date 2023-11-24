@@ -40,9 +40,12 @@
     "chinese": "Match Chinese characters",
     "phoneNumber": "Match phone number",
     "extractPhoneNumber": "extract phone number",
-    "IdCard": "Match ID card"
+    "IdCard": "Match ID card(CHN 18 digits)",
+    "PostalCode": "Postal Code (CHN 6 digits)",
+    "IPAddress": "IP Address"
   },
   "status": {
+    "more": "more",
     "transforming": "Transforming",
     "confirm": "Start Transformation",
     "stop": "Stop",
