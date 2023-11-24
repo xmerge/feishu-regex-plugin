@@ -1,0 +1,56 @@
+{
+  "form": {
+    "currentTable": "Current Table",
+    "chooseSelectMode": "Choose Conversion Mode",
+    "chooseOriginField": "Choose Source Field",
+    "chooseTargetField": "Choose Target Field",
+    "inputRegexText": "Enter Regular Expression",
+    "modifier": "modifier(optional)",
+    "inputReplaceText": "Enter the replacement text"
+  },
+  "mode": {
+    "test": "Match",
+    "match": "Extract",
+    "replace": "Replace",
+    "split": "Split"
+  },
+  "info": {
+    "originField": "The source field should be of numeric or text types",
+    "targetField": "The target field should be of text type"
+  },
+  "message": {
+    "emptyField": "Please select a field",
+    "emptyMode": "Please select a conversion mode",
+    "emptyRegex": "Please enter a regular expression",
+    "wrongRegex": "Please enter a valid regular expression"
+  },
+  "res" : {
+    "true": "true",
+    "false": "false"
+  },
+  "modifier": {
+    "global": "Global search -g",
+    "ignoreCase": "Case-insensitive -i",
+    "multiLine": "Multiline mode -m",
+    "newline": "Include newline characters -s"
+  },
+  "sample": {
+    "number": "Match numbers",
+    "aplpha": "Match letters",
+    "chinese": "Match Chinese characters",
+    "phoneNumber": "Match phone number",
+    "extractPhoneNumber": "extract phone number",
+    "IdCard": "Match ID card"
+  },
+  "status": {
+    "transforming": "Transforming",
+    "confirm": "Start Transformation",
+    "stop": "Stop",
+    "succeeded": "Transformation Succeeded: ",
+    "failed": "Transformation Failed: ",
+    "stopTag": "Transformation Stopped",
+    "failTag": "Transformation Failed",
+    "completeTag": "Transformation Complete",
+    "checkOriginField": "Please check the source field data"
+  }
+}

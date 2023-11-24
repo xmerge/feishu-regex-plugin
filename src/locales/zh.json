@@ -1,0 +1,56 @@
+{
+  "form": {
+    "currentTable": "当前数据表",
+    "chooseSelectMode": "选择转换模式",
+    "chooseOriginField": "选择源字段",
+    "chooseTargetField": "选择目标字段",
+    "inputRegexText": "输入正则表达式",
+    "modifier": "修饰符（可选）",
+    "inputReplaceText": "输入替换目标文本"
+  },
+  "mode": {
+    "test": "匹配",
+    "match": "提取",
+    "replace": "替换",
+    "split": "分割"
+  },
+  "info": {
+    "originField": "源字段应为数字或文本类型",
+    "targetField": "目标字段应为文本类型"
+  },
+  "message": {
+    "emptyField": "请选择字段",
+    "emptyMode": "请选择转换模式",
+    "emptyRegex": "请输入正则表达式",
+    "wrongRegex": "请输入正确的正则表达式"
+  },
+  "res" : {
+    "true": "符合",
+    "false": "不符合"
+  },
+  "modifier": {
+    "global": "全局搜索 -g",
+    "ignoreCase": "忽略大小写 -i",
+    "multiLine": "多行模式 -m",
+    "newline": "包含换行符 -s"
+  },
+  "sample": {
+    "number": "数字",
+    "aplpha": "字母",
+    "chinese": "中文",
+    "phoneNumber": "电话号码",
+    "extractPhoneNumber": "提取电话号码",
+    "IdCard": "身份证"
+  },
+  "status": {
+    "transforming": "转换中",
+    "confirm": "开始转换",
+    "stop": "停止",
+    "succeeded": "转换成功：",
+    "failed": "转换失败：",
+    "stopTag": "转换停止",
+    "failTag": "转换失败",
+    "completeTag": "转换完成",
+    "checkOriginField": "请检查源字段数据"
+  }
+}
