@@ -13,7 +13,8 @@ import { bitable } from "@lark-base-open/js-sdk";
 import { ref, onMounted, shallowRef, computed, reactive } from "vue";
 import { i18n } from "../locales/i18n";
 import { ElMessage } from "element-plus";
-import { WarningFilled } from "@element-plus/icons-vue";
+import { WarningFilled, CaretBottom } from "@element-plus/icons-vue";
+import { syntaxReferenceList } from "./Form"
 const { t } = i18n.global;
 
 /** 页面加载数据 */
@@ -51,18 +52,22 @@ const transformPatternList = computed(() => {
     {
       label: t("mode.test"),
       value: "test",
+      desc: t("mode.testDesc"),
     },
     {
       label: t("mode.match"),
       value: "match",
+      desc: t("mode.matchDesc"),
     },
     {
       label: t("mode.replace"),
       value: "replace",
+      desc: t("mode.replaceDesc"),
     },
     {
       label: t("mode.split"),
       value: "split",
+      desc: t("mode.splitDesc"),
     },
   ];
 });
@@ -86,7 +91,7 @@ const modifierList = computed(() => {
     },
   ];
 });
-activeModifier.value[0] = modifierList.value[0]["value"]
+activeModifier.value[0] = modifierList.value[0]["value"];
 
 const sampleList = computed(() => {
   return [
@@ -393,6 +398,16 @@ type SupportField = ITextField | IDateTimeField | INumberField;
 </script>
 
 <template>
+  <div style="margin-bottom: 15px">
+    <div>
+      <el-alert show-icon type="info">
+        <template #title>
+          {{ t("info.guideDesc") }}
+          <a :href="t(`info.url`)" target="_blank">{{ t(`info.guide`) }}</a>
+        </template>
+      </el-alert>
+    </div>
+  </div>
   <div style="padding-bottom: 10px">
     <el-form label-position="top">
       <el-row
@@ -475,7 +490,7 @@ type SupportField = ITextField | IDateTimeField | INumberField;
           </el-select>
         </el-form-item>
         <el-row style="width: 100%; justify-content: space-between">
-          <el-col :span="11">
+          <el-col :span="9">
             <el-form-item :label="t(`form.chooseSelectMode`)">
               <el-select
                 v-model="activeTransformPattern"
@@ -490,11 +505,21 @@ type SupportField = ITextField | IDateTimeField | INumberField;
                   :key="item.value"
                   :label="item.label"
                   :value="item"
-                />
+                >
+                  <span style="float: left">{{ item.label }}</span>
+                  <span
+                    style="
+                      margin-left: 20px;
+                      color: var(--el-text-color-secondary);
+                      font-size: 13px;
+                    "
+                    >{{ item.desc }}</span
+                  >
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="14">
             <el-form-item :label="t(`form.modifier`)">
               <el-select
                 v-model="activeModifier"
@@ -590,6 +615,28 @@ type SupportField = ITextField | IDateTimeField | INumberField;
         {{ isLoading ? t("status.transforming") : t("status.confirm") }}
       </el-button>
       <el-button @click="handleStop"> {{ t("status.stop") }} </el-button>
+      <el-tooltip  placement="bottom" effect="light" trigger="click" :hide-after="0">
+        <template #content>
+          <div v-for="item in syntaxReferenceList">
+            <span style="color: #337ecc; font-weight: bolder;">
+              {{ item.syntax }}
+            </span>
+            <span style="margin-left: 10px;">
+              {{ item.desc }}
+            </span>
+          </div>
+          <el-row style="background-color: #e9e9eb;">
+              更多指南详见
+              <a :href="t(`info.url`)" target="_blank">{{ t(`info.guide`) }}</a>
+            </el-row>
+        </template>
+        <el-button type="primary" plain>
+          语法参考
+        <el-icon><CaretBottom /></el-icon>
+        
+      </el-button>
+      </el-tooltip>
+
     </div>
     <div
       v-if="errorMsg"

@@ -4,7 +4,7 @@
     "chooseSelectMode": "Choose Conversion Mode",
     "chooseOriginField": "Choose Source Field",
     "chooseTargetField": "Choose Target Field",
-    "inputRegexText": "Enter Regular Expression",
+    "inputRegexText": "Enter Regex Expression",
     "modifier": "modifier(optional)",
     "inputReplaceText": "Enter the replacement text"
   },
@@ -12,11 +12,19 @@
     "test": "Match",
     "match": "Extract",
     "replace": "Replace",
-    "split": "Split"
+    "split": "Split",
+    "testDesc": "Check if the string matches the regular expression",
+    "matchDesc": "Extract substrings that match the regular expression",
+    "replaceDesc": "Replace matching substrings with the specified string",
+    "splitDesc": "Split into substrings based on the regular expression"
+
   },
   "info": {
     "originField": "The source field should be of numeric or text types",
-    "targetField": "The target field should be of text type"
+    "targetField": "The target field should be of text type",
+    "guideDesc": "Utilize regular expressions to match and manipulate text, ",
+    "guide": "plugin guide",
+    "url": "https://uestc.feishu.cn/docx/Ue4odm0Ftowfp3xg6macNOczn5E"
   },
   "message": {
     "emptyField": "Please select a field",

@@ -12,11 +12,18 @@
     "test": "匹配",
     "match": "提取",
     "replace": "替换",
-    "split": "分割"
+    "split": "分割",
+    "testDesc": "检测字符串与正则表达式是否匹配",
+    "matchDesc": "提取与正则表达式匹配的子串",
+    "replaceDesc": "将匹配子串替换为指定字符串",
+    "splitDesc": "按正则表达式分割为子串"
   },
   "info": {
     "originField": "源字段应为数字或文本类型",
-    "targetField": "目标字段应为文本类型"
+    "targetField": "目标字段应为文本类型",
+    "guideDesc": "利用正则表达式匹配和操作文本，",
+    "guide": "插件指南",
+    "url": "https://uestc.feishu.cn/docx/Ue4odm0Ftowfp3xg6macNOczn5E"
   },
   "message": {
     "emptyField": "请选择字段",
@@ -25,8 +32,8 @@
     "wrongRegex": "请输入正确的正则表达式"
   },
   "res" : {
-    "true": "符合",
-    "false": "不符合"
+    "true": "匹配",
+    "false": "不匹配"
   },
   "modifier": {
     "global": "全局搜索 -g",
@@ -38,7 +45,7 @@
     "number": "数字",
     "aplpha": "字母",
     "chinese": "中文",
-    "phoneNumber": "电话号码",
+    "phoneNumber": "电话号码（严格匹配）",
     "extractPhoneNumber": "提取电话号码",
     "IdCard": "身份证(18位)",
     "PostalCode": "邮政编码(6位)",
