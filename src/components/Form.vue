@@ -14,7 +14,7 @@ import { ref, onMounted, shallowRef, computed, reactive } from "vue";
 import { i18n } from "../locales/i18n";
 import { ElMessage } from "element-plus";
 import { WarningFilled, CaretBottom } from "@element-plus/icons-vue";
-import { syntaxReferenceList } from "./Form"
+// import { syntaxReferenceList } from "./Form";
 const { t } = i18n.global;
 
 /** 页面加载数据 */
@@ -117,6 +117,9 @@ const sampleList = computed(() => {
     // },
   ];
 });
+const syntaxReferenceList = computed(() => {
+  return i18n.global.tm("syntaxReferenceList")
+})
 
 /**
  * 处理单位变化的函数
@@ -203,19 +206,27 @@ const setValueByRecordId = async (
   return res;
 };
 
+/**
+ * 验证表单
+ */
 const fomrValidate = () => {
+  // 源字段和目标字段都为空
   if (!(originField.value && targetField.value)) {
     return t("message.emptyField");
   }
+  // 转换模式为空
   if (!activeTransformPattern.value.value.length) {
     return t("message.emptyMode");
   }
+  // 正则表达式文本为空
   if (!regexText.value.length) {
     return t("message.emptyRegex");
   }
+  // 正则表达式无效
   if (!isRegexValid(regexText.value)) {
     return t("message.wrongRegex");
   }
+  // 验证通过
   return null;
 };
 
@@ -223,69 +234,75 @@ const fomrValidate = () => {
  * 提交转换
  */
 const handleConfirm = async () => {
-  const msg = fomrValidate();
+  const msg = fomrValidate(); // 执行表单验证
+
   if (msg) {
-    errorMsg.value = msg;
+    errorMsg.value = msg; // 如果有错误信息，设置错误信息
     return;
   }
-  handleReset();
+
+  handleReset(); // 清空表单数据
+
   if (activeTable.value) {
-    const recordIdList = await activeTable.value.getRecordIdList();
+    const recordIdList = await activeTable.value.getRecordIdList(); // 获取所有记录ID列表
     const originSelectField = await activeTable.value.getField<SupportField>(
       originField.value!.id
-    );
+    ); // 获取原始字段
     const targetSelectField = await activeTable.value.getField<ITextField>(
       targetField.value!.id
-    );
+    ); // 获取目标字段
+
     try {
       const promises: Promise<void>[] = [];
+
+      // 遍历记录ID列表
       for (const recordId of recordIdList) {
-        const val = await extractValueByRecordId(originSelectField, recordId);
+        const val = await extractValueByRecordId(originSelectField, recordId); // 提取记录ID对应原始字段的值
         if (!val) {
-          continue;
+          continue; // 如果值为空则继续下一次循环
         }
-        recordCount.value++;
+
+        recordCount.value++; // 记录转换的记录数
         if (!stopFlag.value) {
-          const rplcTxt = replaceText.value;
-          let targetVal = regexTranform(val, regexText.value, rplcTxt);
+          const rplcTxt = replaceText.value; // 获取替换文本
+          let targetVal = regexTranform(val, regexText.value, rplcTxt); // 正则转换值
           if (targetVal != undefined) {
             const proimse = setValueByRecordId(
               targetSelectField,
               recordId,
               targetVal
-            );
-            promises.push(proimse);
+            ); // 设置记录ID对应目标字段的值
+            promises.push(proimse); // 将Promise添加到promises数组中
           }
         }
       }
-      await Promise.all(promises);
+
+      await Promise.all(promises); // 等待所有Promise完成
     } finally {
-      isLoading.value = false;
+      isLoading.value = false; // 设置加载状态为false
       if (!stopFlag.value && recordCount.value === sucessCounter.value) {
-        finishFlag.value = true;
+        finishFlag.value = true; // 如果没有停止标志且记录数等于成功计数器的值，则设置完成标志为true
       }
     }
   }
 };
 
+/**
+ * 转换模版
+ * @param mode 模式
+ */
 const handleClickSample = (mode: string) => {
-  if (mode == "number") {
-    regexText.value = "[0-9]+";
-  } else if (mode == "alpha") {
-    regexText.value = "[a-z]+";
-  } else if (mode == "phoneNumber") {
-    regexText.value = "^1[0-9]{10}$";
-  } else if (mode == "chinese") {
-    regexText.value = `[\\u4e00-\\u9fff]+`;
-  } else if (mode == "extractPhoneNumber") {
-    regexText.value = "1[0-9]{10}";
-  } else if (mode == "IdCard") {
-    regexText.value = `^[1-9]\\d{5}(18|19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$`;
-  } else if (mode == "PostalCode") {
-    regexText.value = `^[1-9]\\d{5}$`;
-  } else if (mode == "IPAddress") {
-    regexText.value = `^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$`;
-  }
+  const regexes = {
+    number: "[0-9]+",
+    alpha: "[a-z]+",
+    phoneNumber: "^1[0-9]{10}$",
+    chinese: `[\\u4e00-\\u9fff]+`,
+    extractPhoneNumber: "1[0-9]{10}",
+    IdCard: `^[1-9]\\d{5}(18|19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$`,
+    PostalCode: `^[1-9]\\d{5}$`,
+    IPAddress: `^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$`,
+  };
+  regexText.value = regexes[mode];
 };
 
 /**
@@ -615,28 +632,31 @@ type SupportField = ITextField | IDateTimeField | INumberField;
         {{ isLoading ? t("status.transforming") : t("status.confirm") }}
       </el-button>
       <el-button @click="handleStop"> {{ t("status.stop") }} </el-button>
-      <el-tooltip  placement="bottom" effect="light" trigger="click" :hide-after="0">
+      <el-tooltip
+        placement="bottom"
+        effect="light"
+        trigger="click"
+        :hide-after="0"
+      >
         <template #content>
           <div v-for="item in syntaxReferenceList">
-            <span style="color: #337ecc; font-weight: bolder;">
+            <span style="color: #337ecc; font-weight: bolder">
               {{ item.syntax }}
             </span>
-            <span style="margin-left: 10px;">
+            <span style="margin-left: 10px">
               {{ item.desc }}
             </span>
           </div>
-          <el-row style="background-color: #e9e9eb;">
-              更多指南详见
-              <a :href="t(`info.url`)" target="_blank">{{ t(`info.guide`) }}</a>
-            </el-row>
+          <el-row style="background-color: #e9e9eb">
+            {{ t(`moreRef`) }}
+            <a :href="t(`info.url`)" target="_blank">{{ t(`info.guide`) }}</a>
+          </el-row>
         </template>
         <el-button type="primary" plain>
-          语法参考
-        <el-icon><CaretBottom /></el-icon>
-        
-      </el-button>
+          {{ t(`grammarRef`) }}
+          <el-icon><CaretBottom /></el-icon>
+        </el-button>
       </el-tooltip>
-
     </div>
     <div
       v-if="errorMsg"

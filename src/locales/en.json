@@ -63,5 +63,85 @@
     "failTag": "Transformation Failed",
     "completeTag": "Transformation Complete",
     "checkOriginField": "Please check the source field data"
-  }
+  },
+  "grammarRef": "Grammar Reference",
+  "moreRef": "For more detailed guides, refer to, ",
+  "syntaxReferenceList": [
+    {
+      "syntax": ".",
+      "desc": "Any character except newline."
+    },
+    {
+      "syntax": "^",
+      "desc": "Start of string."
+    },
+    {
+      "syntax": "$",
+      "desc": "End of string."
+    },
+    {
+      "syntax": "\\d, \\w, \\s",
+      "desc": "Match a digit, word character, or whitespace."
+    },
+    {
+      "syntax": "\\D, \\W, \\S",
+      "desc": "Match a non-digit, non-word character, or non-whitespace."
+    },
+    {
+      "syntax": "[abc]",
+      "desc": "Match any one letter from a, b, or c."
+    },
+    {
+      "syntax": "[az]",
+      "desc": "Match any one letter from a to z."
+    },
+    {
+      "syntax": "[^abc]",
+      "desc": "Match any letter except a, b, or c."
+    },
+    {
+      "syntax": "aa|bb",
+      "desc": "Match either aa or bb."
+    },
+    {
+      "syntax": "?",
+      "desc": "Match 0 or 1 times."
+    },
+    {
+      "syntax": "*",
+      "desc": "Match 0 or more times."
+    },
+    {
+      "syntax": "+",
+      "desc": "Match 1 or more times."
+    },
+    {
+      "syntax": "{n}",
+      "desc": "Match exactly n times."
+    },
+    {
+      "syntax": "{n,}",
+      "desc": "Match n or more times."
+    },
+    {
+      "syntax": "{m,n}",
+      "desc": "Match at least m and at most n times."
+    },
+    {
+      "syntax": "(expr)",
+      "desc": "Capture expr as a subpattern and use it with \\1."
+    },
+    {
+      "syntax": "(?:expr)",
+      "desc": "Non-capturing subpattern."
+    },
+    {
+      "syntax": "(?=expr)",
+      "desc": "Positive lookahead pattern expr."
+    },
+    {
+      "syntax": "(?!expr)",
+      "desc": "Negative lookahead pattern expr."
+    }
+  ]
 }
