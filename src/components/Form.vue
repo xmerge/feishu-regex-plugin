@@ -628,7 +628,7 @@ type SupportField = ITextField | IDateTimeField | INumberField;
     </div>
     <el-col :span="24"> </el-col>
     <div>
-      <el-button type="primary" :disabled="isLoading" @click="handleConfirm">
+      <el-button :disabled="isLoading" @click="handleConfirm" color="rgb(20, 86, 240)">
         {{ isLoading ? t("status.transforming") : t("status.confirm") }}
       </el-button>
       <el-button @click="handleStop"> {{ t("status.stop") }} </el-button>
