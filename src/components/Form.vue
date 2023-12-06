@@ -417,7 +417,7 @@ type SupportField = ITextField | IDateTimeField | INumberField;
 <template>
   <div style="margin-bottom: 15px">
     <div>
-      <el-alert show-icon type="info">
+      <el-alert show-icon type="info" style="border-radius: 6px;">
         <template #title>
           {{ t("info.guideDesc") }}
           <a :href="t(`info.url`)" target="_blank">{{ t(`info.guide`) }}</a>
@@ -437,10 +437,9 @@ type SupportField = ITextField | IDateTimeField | INumberField;
       >
         {{ t("form.currentTable") }}
         <el-tag
-          type="success"
-          effect="dark"
+          type="primary"
           size="medium"
-          style="margin-left: 10px"
+          style="margin-left: 10px; border-radius: 10px;"
         >
           {{ activeTableName }}
         </el-tag>
@@ -563,7 +562,7 @@ type SupportField = ITextField | IDateTimeField | INumberField;
             v-model="regexText"
             :placeholder="t(`form.inputRegexText`)"
             clearable
-            style="width: 100%"
+            style="width: 100%;"
           >
             <template #prepend>
               <span> / </span>
@@ -596,19 +595,19 @@ type SupportField = ITextField | IDateTimeField | INumberField;
       >
       <el-tag
         class="ml-2 clickable tag"
-        type="warning"
+        type=""
         @click="handleClickSample(`alpha`)"
         >{{ t("sample.aplpha") }}</el-tag
       >
       <el-tag
         class="ml-2 clickable tag"
-        type="success"
+        type=""
         @click="handleClickSample(`phoneNumber`)"
         >{{ t("sample.phoneNumber") }}</el-tag
       >
       <el-popover :width="150" :hide-after="0" trigger="click">
         <template #reference>
-          <el-tag class="ml-2 clickable tag" effect="plain" type="info">{{
+          <el-tag class="ml-2 clickable tag" effect="" type="info">{{
             t("status.more")
           }}</el-tag>
         </template>
@@ -640,7 +639,7 @@ type SupportField = ITextField | IDateTimeField | INumberField;
       >
         <template #content>
           <div v-for="item in syntaxReferenceList">
-            <span style="color: #337ecc; font-weight: bolder">
+            <span style="color: rgb(20, 86, 240); font-weight: bolder">
               {{ item.syntax }}
             </span>
             <span style="margin-left: 10px">
@@ -726,6 +725,25 @@ type SupportField = ITextField | IDateTimeField | INumberField;
   padding-bottom: 0px;
   padding-left: 5px;
 }
+:deep(.el-input__wrapper) {
+  border-radius: 6px;
+}
+:deep(.el-button) {
+  border-radius: 6px;
+}
+:deep(.el-tag__content) {
+  color: rgb(20, 86, 240);
+}
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+  color: rgb(20, 86, 240);
+}
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+  color: rgb(20, 86, 240);
+}
+.el-select-dropdown__item.selected {
+  color: rgb(20, 86, 240);
+}
+
 .card-header {
   display: flex;
   margin-left: -10px;
@@ -747,6 +765,9 @@ type SupportField = ITextField | IDateTimeField | INumberField;
 .clickable :hover {
   cursor: pointer;
 }
+.clickable {
+  border-radius: 8px;
+}
 .tag {
   margin-right: 5px;
 }
@@ -757,5 +778,15 @@ type SupportField = ITextField | IDateTimeField | INumberField;
   display: flex;
   flex-wrap: wrap;
   row-gap: 5px;
+}
+</style>
+
+<style>
+.el-popper__arrow {
+  display: none !important
+}
+.el-popper {
+  border-radius: 6px !important;
+  margin-top: -8px !important;
 }
 </style>
